@@ -75,7 +75,9 @@
       "<rootDir>/libs/"
     ],
     "moduleNameMapper": {
-      "^@app/common(|/.*)$": "<rootDir>/libs/common/src/$1"
+      "^@app/common(|/.*)$": "<rootDir>/libs/common/src/$1",
+      "^@app/common/prisma(|/.*)$": "<rootDir>/libs/common/prisma/src/$1",
+      "^@app/prisma(|/.*)$": "<rootDir>/libs/prisma/src/$1"
     }
   }
 }

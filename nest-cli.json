@@ -37,6 +37,15 @@
         "tsConfigPath": "libs/common/tsconfig.lib.json"
       }
     },
+    "common/prisma": {
+      "type": "library",
+      "root": "libs/common/prisma",
+      "entryFile": "index",
+      "sourceRoot": "libs/common/prisma/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/common/prisma/tsconfig.lib.json"
+      }
+    },
     "orders": {
       "type": "application",
       "root": "apps/orders",
@@ -44,6 +53,15 @@
       "sourceRoot": "apps/orders/src",
       "compilerOptions": {
         "tsConfigPath": "apps/orders/tsconfig.app.json"
+      }
+    },
+    "prisma": {
+      "type": "library",
+      "root": "libs/prisma",
+      "entryFile": "index",
+      "sourceRoot": "libs/prisma/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/prisma/tsconfig.lib.json"
       }
     }
   }
