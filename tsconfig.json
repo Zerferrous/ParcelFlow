@@ -34,6 +34,14 @@
       "@app/common/prisma/*": [
         "libs/common/prisma/src/*"
       ],
+      "@app/database": [
+        "libs/database/src",
+        "libs/database/src"
+      ],
+      "@app/database/*": [
+        "libs/database/src/*",
+        "libs/database/src/*"
+      ],
       "@app/prisma": [
         "libs/prisma/src"
       ],

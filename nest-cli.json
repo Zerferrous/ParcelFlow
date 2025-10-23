@@ -28,22 +28,13 @@
         "tsConfigPath": "apps/auth/tsconfig.app.json"
       }
     },
-    "common": {
+    "database": {
       "type": "library",
-      "root": "libs/common",
+      "root": "libs/database",
       "entryFile": "index",
-      "sourceRoot": "libs/common/src",
+      "sourceRoot": "libs/database/src",
       "compilerOptions": {
-        "tsConfigPath": "libs/common/tsconfig.lib.json"
-      }
-    },
-    "common/prisma": {
-      "type": "library",
-      "root": "libs/common/prisma",
-      "entryFile": "index",
-      "sourceRoot": "libs/common/prisma/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/common/prisma/tsconfig.lib.json"
+        "tsConfigPath": "libs/database/tsconfig.lib.json"
       }
     },
     "orders": {
@@ -53,15 +44,6 @@
       "sourceRoot": "apps/orders/src",
       "compilerOptions": {
         "tsConfigPath": "apps/orders/tsconfig.app.json"
-      }
-    },
-    "prisma": {
-      "type": "library",
-      "root": "libs/prisma",
-      "entryFile": "index",
-      "sourceRoot": "libs/prisma/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/prisma/tsconfig.lib.json"
       }
     }
   }
