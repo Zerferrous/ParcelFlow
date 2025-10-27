@@ -1,12 +1,13 @@
 import { Controller, Get } from '@nestjs/common';
 import { ApiGatewayService } from './api-gateway.service';
+import { firstValueFrom } from 'rxjs';
 
 @Controller()
 export class ApiGatewayController {
   constructor(private readonly apiGatewayService: ApiGatewayService) {}
 
   @Get()
-  getHello(): string {
+  getHello() {
     return this.apiGatewayService.getHello();
   }
 }
