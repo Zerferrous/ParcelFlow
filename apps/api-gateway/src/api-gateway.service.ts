@@ -1,13 +1,10 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { ClientProxy, MessagePattern } from '@nestjs/microservices';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class ApiGatewayService {
-  constructor(@Inject('AUTH') private readonly authClient: ClientProxy) {}
+  constructor() {}
 
   async getHello() {
-    return await this.authClient.send('test', {
-      message: 'test msg sended',
-    });
+    return 'Hello world';
   }
 }

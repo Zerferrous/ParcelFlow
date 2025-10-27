@@ -5,6 +5,7 @@ import { AuthController } from './controllers/auth.controller';
 import { UsersController } from './controllers/users.controller';
 import { OrdersController } from './controllers/orders.controller';
 import { RmqModule } from '@app/rmq';
+import { AuthService } from './services/auth.service';
 
 @Module({
   imports: [
@@ -18,6 +19,6 @@ import { RmqModule } from '@app/rmq';
     UsersController,
     OrdersController,
   ],
-  providers: [ApiGatewayService],
+  providers: [ApiGatewayService, AuthService],
 })
 export class ApiGatewayModule {}

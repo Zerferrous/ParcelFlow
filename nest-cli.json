@@ -37,6 +37,15 @@
         "tsConfigPath": "libs/database/tsconfig.lib.json"
       }
     },
+    "jwt": {
+      "type": "library",
+      "root": "libs/jwt",
+      "entryFile": "index",
+      "sourceRoot": "libs/jwt/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/jwt/tsconfig.lib.json"
+      }
+    },
     "orders": {
       "type": "application",
       "root": "apps/orders",

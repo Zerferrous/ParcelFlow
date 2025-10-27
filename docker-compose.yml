@@ -12,6 +12,7 @@ services:
     depends_on:
       - db
       - auth
+      - users
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
@@ -24,6 +25,21 @@ services:
       dockerfile: ./apps/auth/Dockerfile
       target: development
     command: npm run start:dev auth
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - rabbitmq
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+
+  users:
+    build:
+      context: .
+      dockerfile: ./apps/users/Dockerfile
+      target: development
+    command: npm run start:dev users
     env_file:
       - .env
     depends_on:
