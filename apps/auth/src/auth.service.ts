@@ -88,6 +88,18 @@ export class AuthService {
     }
   }
 
+  async verify(token: string) {
+    try {
+      return await this.jwtService.verifyToken(token);
+    } catch (error) {
+      throw new RpcException({
+        status: 401,
+        message: 'Invalid or expired token',
+        error: 'UnauthorizedException',
+      });
+    }
+  }
+
   private generateTokens(id: string) {
     const payload: JwtPayload = { id };
     const accessToken = this.jwtService.signAccessToken(payload);

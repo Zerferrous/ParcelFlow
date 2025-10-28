@@ -22,4 +22,9 @@ export class AuthController {
   async refresh(@Payload() token: string) {
     return await this.authService.refresh(token);
   }
+
+  @MessagePattern('auth.verify')
+  async verify(@Payload() token: string) {
+    return await this.authService.verify(token);
+  }
 }

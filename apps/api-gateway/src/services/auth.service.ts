@@ -103,6 +103,12 @@ export class AuthService {
     }
   }
 
+  async logout(res: Response) {
+    this.setCookie(res, 'refreshToken', new Date(0));
+
+    return true;
+  }
+
   private setCookie(res: Response, value: string, expires: Date) {
     res.cookie('refreshToken', value, {
       httpOnly: true,
