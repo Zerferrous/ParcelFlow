@@ -16,4 +16,9 @@ export class UsersController {
   async findByEmail(@Payload() email: string) {
     return this.usersService.findByEmail(email);
   }
+
+  @MessagePattern('users.findById')
+  async findById(@Payload() id: string) {
+    return this.usersService.findById(id);
+  }
 }

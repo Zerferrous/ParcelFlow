@@ -1,5 +1,5 @@
 import { JwtConfigService } from '@app/jwt';
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { RegisterRequestDto } from 'apps/users/src/dto/register.dto';
 import { hash, verify } from 'argon2';
@@ -62,6 +62,30 @@ export class AuthService {
       });
 
     return this.generateTokens(user.id);
+  }
+
+  async refresh(token: string) {
+    try {
+      const payload: JwtPayload = await this.jwtService.verifyToken(token);
+      const user = await lastValueFrom(
+        this.usersClient.send('users.findById', payload.id),
+      );
+
+      if (!user)
+        throw new RpcException({
+          status: 404,
+          message: 'User not found',
+          error: 'NotFoundException',
+        });
+
+      return this.generateTokens(user.id);
+    } catch (error) {
+      throw new RpcException({
+        status: 401,
+        message: 'Invalid or expired refresh token',
+        error: 'UnauthorizedException',
+      });
+    }
   }
 
   private generateTokens(id: string) {

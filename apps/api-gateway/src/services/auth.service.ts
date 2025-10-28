@@ -5,12 +5,13 @@ import {
   InternalServerErrorException,
   Logger,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ClientProxy } from '@nestjs/microservices';
 import { LoginRequestDto } from 'apps/users/src/dto/login.dto';
 import { RegisterRequestDto } from 'apps/users/src/dto/register.dto';
-import type { Response } from 'express';
+import type { Request, Response } from 'express';
 import ms from 'ms';
 import { lastValueFrom } from 'rxjs';
 
@@ -60,6 +61,39 @@ export class AuthService {
       );
       return { accessToken };
     } catch (error) {
+      if (error.status === 404) {
+        throw new NotFoundException(error.message);
+      }
+
+      Logger.log('Unexpected RMQ error:', error);
+      throw new InternalServerErrorException('Internal server error');
+    }
+  }
+
+  async refresh(req: Request, res: Response) {
+    const cookieRefreshToken = req.cookies['refreshToken'];
+
+    if (!cookieRefreshToken)
+      throw new UnauthorizedException('Invalid refresh token');
+
+    try {
+      const { accessToken, refreshToken } = await lastValueFrom(
+        this.authClient.send('auth.refresh', cookieRefreshToken),
+      );
+      this.setCookie(
+        res,
+        refreshToken,
+        new Date(
+          Date.now() +
+            ms(this.configService.getOrThrow('JWT_REFRESH_TOKEN_TTL')),
+        ),
+      );
+      return { accessToken };
+    } catch (error) {
+      if (error.status === 401) {
+        throw new UnauthorizedException(error.message);
+      }
+
       if (error.status === 404) {
         throw new NotFoundException(error.message);
       }

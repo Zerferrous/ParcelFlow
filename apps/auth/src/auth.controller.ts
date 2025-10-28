@@ -17,4 +17,9 @@ export class AuthController {
   async login(@Payload() dto: LoginRequestDto) {
     return await this.authService.login(dto);
   }
+
+  @MessagePattern('auth.refresh')
+  async refresh(@Payload() token: string) {
+    return await this.authService.refresh(token);
+  }
 }

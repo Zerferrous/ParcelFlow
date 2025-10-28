@@ -24,8 +24,8 @@ export class JwtConfigService {
     } as JwtSignOptions);
   }
 
-  verifyToken(token: string) {
-    return this.jwtService.verify(token, {
+  async verifyToken(token: string) {
+    return await this.jwtService.verifyAsync(token, {
       secret: this.configService.get<string>('JWT_SECRET'),
     });
   }
