@@ -21,4 +21,9 @@ export class UsersController {
   async findById(@Payload() id: string) {
     return this.usersService.findById(id);
   }
+
+  @MessagePattern('users.findAll')
+  async findAll() {
+    return this.usersService.findAll();
+  }
 }

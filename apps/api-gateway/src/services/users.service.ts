@@ -9,4 +9,8 @@ export class UsersService {
   async getCurrentUser(id: string) {
     return await lastValueFrom(this.usersClient.send('users.findById', id));
   }
+
+  async getAllUsers() {
+    return await lastValueFrom(this.usersClient.send('users.findAll', {}));
+  }
 }

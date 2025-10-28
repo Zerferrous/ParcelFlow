@@ -8,7 +8,6 @@ import {
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { Request } from 'express';
-import * as jwt from 'jsonwebtoken';
 import { lastValueFrom } from 'rxjs';
 
 @Injectable()

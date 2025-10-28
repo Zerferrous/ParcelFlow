@@ -36,7 +36,13 @@ export class AuthService {
       }),
     );
 
-    return this.generateTokens(user.id);
+    const payload: JwtPayload = {
+      id: user.id,
+      email: user.email,
+      roles: user.roles.map((role) => role.name),
+    };
+
+    return this.generateTokens(payload);
   }
 
   async login(dto: LoginRequestDto) {
@@ -61,14 +67,20 @@ export class AuthService {
         error: 'NotFoundException',
       });
 
-    return this.generateTokens(user.id);
+    const payload: JwtPayload = {
+      id: user.id,
+      email: user.email,
+      roles: user.roles.map((role) => role.name),
+    };
+
+    return this.generateTokens(payload);
   }
 
   async refresh(token: string) {
     try {
-      const payload: JwtPayload = await this.jwtService.verifyToken(token);
+      const oldPayload: JwtPayload = await this.jwtService.verifyToken(token);
       const user = await lastValueFrom(
-        this.usersClient.send('users.findById', payload.id),
+        this.usersClient.send('users.findById', oldPayload.id),
       );
 
       if (!user)
@@ -78,7 +90,13 @@ export class AuthService {
           error: 'NotFoundException',
         });
 
-      return this.generateTokens(user.id);
+      const payload: JwtPayload = {
+        id: user.id,
+        email: user.email,
+        roles: user.roles.map((role) => role.name),
+      };
+
+      return this.generateTokens(payload);
     } catch (error) {
       throw new RpcException({
         status: 401,
@@ -100,8 +118,7 @@ export class AuthService {
     }
   }
 
-  private generateTokens(id: string) {
-    const payload: JwtPayload = { id };
+  private generateTokens(payload: JwtPayload) {
     const accessToken = this.jwtService.signAccessToken(payload);
     const refreshToken = this.jwtService.signRefreshToken(payload);
     return {
